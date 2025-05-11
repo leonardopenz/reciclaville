@@ -25,18 +25,21 @@ public class Statements {
     private String cliente;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "data_declaracao", nullable = false)
     private LocalDate dataDeclaracao;
 
-    @Column(nullable = false)
+    @Column(name = "data_inicial", nullable = false)
     private LocalDate dataInicial;
 
-    @Column(nullable = false)
+    @Column(name = "data_final", nullable = false)
     private LocalDate dataFinal;
 
-    @Column(nullable = false)
-    private BigDecimal totalMateriais;
+    @Column(name = "total_materiais", nullable = false)
+    private Double totalMateriais;
 
-    @Column(nullable = false)
-    private BigDecimal totalCompensacao;
+    @Column(name = "total_compensacao", nullable = false)
+    private Double totalCompensacao;
+
+    @OneToMany
+    private List<Items> itensDeclaracao;
 }
