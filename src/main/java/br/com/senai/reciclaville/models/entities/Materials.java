@@ -22,5 +22,5 @@ public class Materials {
     private String nome;
 
     @Column(nullable = false)
-    private BigDecimal percentualCompensacao;
+    private Double percentualCompensacao;
 }

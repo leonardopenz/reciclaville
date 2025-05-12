@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
