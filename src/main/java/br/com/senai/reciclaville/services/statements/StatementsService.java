@@ -34,36 +34,37 @@ public class StatementsService {
     @Autowired
     private StatementsRepository statementsRepository;
 
-    public StatementsResponseDTO newStatement(StatementsRequestDTO statementsRequestDTO){
+    public Statements newStatement(Statements statementInput) {
 
-        Clients client = clientRepository.findById(statementsRequestDTO.getClienteId())
-                .orElseThrow(()-> new EntityNotFoundException("Cliente: "+ statementsRequestDTO.getClienteId()+" não encontrado!"));
+        Clients client = clientRepository.findById(Long.parseLong(statementInput.getCliente()))
+                .orElseThrow(() -> new EntityNotFoundException("Cliente: " + statementInput.getCliente() + " não encontrado!"));
 
-        if(statementsRequestDTO.getDataInicial().isAfter(statementsRequestDTO.getDataFinal())){
+        if (statementInput.getDataInicial().isAfter(statementInput.getDataFinal())) {
             throw new IllegalArgumentException("Data inicial não pode ser maior que a Data final!");
         }
 
         Statements statement = new Statements();
         statement.setCliente(client.getNome());
         statement.setDataDeclaracao(LocalDate.now());
-        statement.setDataInicial(statementsRequestDTO.getDataInicial());
-        statement.setDataFinal(statementsRequestDTO.getDataFinal());
+        statement.setDataInicial(statementInput.getDataInicial());
+        statement.setDataFinal(statementInput.getDataFinal());
 
-        List<Items> itemsOfStatements = statementsRequestDTO.getItensDeclaracao().stream()
-                .map(item ->{
-                    if(item.getToneladasDeclaradas() == null || item.getToneladasDeclaradas() <= 0){
-                        throw new IllegalArgumentException("Toneladas declaradas devem ser maior que 0(zero)");
-                    }
+        List<Items> itemsOfStatements = statementInput.getItensDeclaracao().stream().map(item -> {
+            if (item.getToneladasDeclaradas() == null || item.getToneladasDeclaradas() <= 0) {
+                throw new IllegalArgumentException("Toneladas declaradas devem ser maior que 0 (zero)");
+            }
 
-                Materials material = materialRepository.findById(item.getMaterials().getId())
-                        .orElseThrow(()-> new EntityNotFoundException("Material não encontrado: "+ item.getMaterials().getId()));
-                item.setMaterials(material);
-                item.setPercentualCompensacao(material.getPercentualCompensacao());
-                item.setToneladasCompensadas(item.getToneladasDeclaradas() * material.getPercentualCompensacao() / 100);
-                item.setStatement(statement);
+            Materials material = materialRepository.findById(item.getMaterials().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Material não encontrado: " + item.getMaterials().getId()));
 
-                return item;
-                }).toList();
+            item.setMaterials(material);
+            item.setPercentualCompensacao(material.getPercentualCompensacao());
+            item.setToneladasCompensadas(item.getToneladasDeclaradas() * material.getPercentualCompensacao() / 100);
+            item.setStatement(statement);
+
+            return item;
+        }).toList();
+
         itemsRepository.saveAll(itemsOfStatements);
 
         double totalMateriais = itemsOfStatements.stream().mapToDouble(Items::getToneladasDeclaradas).sum();
@@ -73,19 +74,9 @@ public class StatementsService {
         statement.setTotalCompensacao(totalCompensacao);
         statement.setItensDeclaracao(itemsOfStatements);
 
-        Statements saved = statementsRepository.save(statement);
-
-        return new StatementsResponseDTO(
-                saved.getId(),
-                saved.getCliente(),
-                saved.getDataDeclaracao(),
-                saved.getDataInicial(),
-                saved.getDataFinal(),
-                saved.getTotalMateriais(),
-                saved.getTotalCompensacao(),
-                saved.getItensDeclaracao()
-        );
+        return statementsRepository.save(statement);
     }
+
 
     public List<Statements> findAllStatements(){
         return statementsRepository.findAll();
