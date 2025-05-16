@@ -22,7 +22,7 @@ public class Statements {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private String cliente;
+    private Clients cliente;
 
     @NotNull
     @Column(name = "data_declaracao", nullable = false)

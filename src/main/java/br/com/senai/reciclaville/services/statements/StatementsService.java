@@ -36,7 +36,7 @@ public class StatementsService {
 
     public Statements newStatement(Statements statementInput) {
 
-        Clients client = clientRepository.findById(Long.parseLong(statementInput.getCliente()))
+        Clients client = clientRepository.findById(statementInput.getCliente().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente: " + statementInput.getCliente() + " não encontrado!"));
 
         if (statementInput.getDataInicial().isAfter(statementInput.getDataFinal())) {
@@ -44,7 +44,7 @@ public class StatementsService {
         }
 
         Statements statement = new Statements();
-        statement.setCliente(client.getNome());
+        statement.setCliente(client);
         statement.setDataDeclaracao(LocalDate.now());
         statement.setDataInicial(statementInput.getDataInicial());
         statement.setDataFinal(statementInput.getDataFinal());

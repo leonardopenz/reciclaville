@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ClientResponseDTO {
 
     private Long id;
-    private String name;
+    private String nome;
     private String cnpj;
     private String atividadeEconomica;
     private String responsavel;

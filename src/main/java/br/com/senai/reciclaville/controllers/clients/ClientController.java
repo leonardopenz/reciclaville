@@ -26,7 +26,7 @@ public class ClientController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> create(@RequestBody @Valid ClientResponseDTO clientDTO ) throws Exception{
+    public ResponseEntity<ClientResponseDTO> create(@RequestBody @Valid ClientRequestDTO clientDTO ) throws Exception{
         Clients client = modelMapper.map(clientDTO, Clients.class);
         Clients createdClient = clientService.newClient(client);
         ClientResponseDTO createdClientDTO = modelMapper.map(createdClient, ClientResponseDTO.class);
