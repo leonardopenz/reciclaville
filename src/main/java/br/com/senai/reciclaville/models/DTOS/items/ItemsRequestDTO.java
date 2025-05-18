@@ -1,5 +1,6 @@
 package br.com.senai.reciclaville.models.DTOS.items;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemsRequestDTO {
-    private Long declaracao_id;
+    @NotNull
     private Long material_id;
+    private Double toneladasDeclaradas;
 }

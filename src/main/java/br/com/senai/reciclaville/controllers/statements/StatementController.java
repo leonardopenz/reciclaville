@@ -25,9 +25,9 @@ public class StatementController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<StatementsResponseDTO> create(@RequestBody @Valid StatementsResponseDTO requestDTO) throws Exception{
-        Statements statement = modelMapper.map(requestDTO, Statements.class);
-        Statements createdStatement = statementsService.newStatement(statement);
+    public ResponseEntity<StatementsResponseDTO> create(@RequestBody @Valid StatementsRequestDTO requestDTO) throws Exception{
+        //Statements statement = modelMapper.map(requestDTO, Statements.class);
+        Statements createdStatement = statementsService.newStatement(requestDTO);
         StatementsResponseDTO createdStatementDTO = modelMapper.map(createdStatement, StatementsResponseDTO.class);
 
         return ResponseEntity.ok(createdStatementDTO);

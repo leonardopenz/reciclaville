@@ -1,6 +1,6 @@
 package br.com.senai.reciclaville.models.DTOS.statements;
 
-import br.com.senai.reciclaville.models.entities.Items;
+import br.com.senai.reciclaville.models.DTOS.items.ItemsResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,5 @@ public class StatementsResponseDTO {
     private LocalDate dataFinal;
     private Double totalMateriais;
     private Double totalCompensacao;
-    private List<Items> itensDeclaracao;
+    private List<ItemsResponseDTO> itensDeclaracao;
 }

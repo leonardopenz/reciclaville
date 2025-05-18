@@ -1,5 +1,6 @@
 package br.com.senai.reciclaville.models.DTOS.statements;
 
+import br.com.senai.reciclaville.models.DTOS.items.ItemsRequestDTO;
 import br.com.senai.reciclaville.models.entities.Items;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +16,6 @@ public class StatementsRequestDTO {
     private Long clienteId;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
-    private List<Items> itensDeclaracao;
+    private List<ItemsRequestDTO> itensDeclaracao;
+
 }

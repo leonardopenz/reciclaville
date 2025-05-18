@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/materials")
+@RequestMapping("/materiais")
 public class MaterialController {
 
     @Autowired

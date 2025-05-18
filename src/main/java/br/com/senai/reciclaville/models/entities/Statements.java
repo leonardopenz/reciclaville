@@ -40,6 +40,6 @@ public class Statements {
     @Column(name = "total_compensacao", nullable = false)
     private Double totalCompensacao;
 
-    @OneToMany
+    @OneToMany(mappedBy = "statement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Items> itensDeclaracao;
 }
